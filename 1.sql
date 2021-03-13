@@ -1,0 +1,2 @@
+select genre 
+from artists 
