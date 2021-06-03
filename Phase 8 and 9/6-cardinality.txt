@@ -1,0 +1,26 @@
+select title, author, school, data from art where price = (select max(price) from art);
+
+
+-- Cardinalities: 499 + 1 + 499 = 999
+-- Join estimation: |T'| = 499 / 499 = 1
+
+
+Experiment 1:
+Time: 1.68950 ms 
+
+Experiment 2:
+Time: 1.25070 ms 
+
+Experiment 3:
+Time: 1.30120 ms 
+
+Experiment 4:
+Time: 1.65170 ms 
+
+Experiment 5:
+Time: 0.99960 ms 
+
+6.89270 / 5 = 1.37854
+
+Average runtime: 1.37854 ms
+

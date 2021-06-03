@@ -1,0 +1,26 @@
+select title, author, school, data from art where school in ("French", "German") and data between "1900" and "1950";
+
+
+-- Cardinalities: 499 + 53 + 1 = 553
+-- Join estimation: |T'| = 499 * 2 / 3 / 499 ~ 0.66 = 1
+
+
+
+Experiment 1:
+Time: 1.11970 ms 
+
+Experiment 2:
+Time: 0.58300 ms 
+
+Experiment 3:
+Time: 0.61670 ms 
+
+Experiment 4:
+Time: 0.60220 ms 
+
+Experiment 5:
+Time: 0.79250 ms 
+
+3.71410 / 5 = 0.74282
+
+Average runtime: 0.74282 ms

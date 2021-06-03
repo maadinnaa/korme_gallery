@@ -1,0 +1,70 @@
+select title, author, school, data, price from sold 
+    inner join art on sold.book_id = art.id 
+    inner join type_of_art on art.type_id = type_of_art.id 
+    where sold.user_id = 1 and type_of_art.name = "mythological";
+
+
+
+
+-- First join selection
+-- (sold join art) join type_of_art
+-- Join cardinalities: 499 + 499 + 1 + 1 = 1000
+-- Join estimation: |T'| = 18 * 499 * 10 / 18 / 10 / 18 / 10 ~ 2.77 = 3
+-- Time: 190ms
+
+select title, author, school, data, price from sold 
+    inner join art on sold.book_id = art.id 
+    inner join type_of_art on art.type_id = type_of_art.id 
+    where sold.user_id = 1 and type_of_art.name = "mythological";
+
+
+
+
+-- Second join selection
+-- (art join sold) join type_of_art
+-- Join cardinalities: 499 + 499 + 1 + 1 = 1000
+-- Join estimation: |T'| = 18 * 499 * 10 / 18 / 10 / 18 / 10 ~ 2.77 = 3
+-- Time: 184ms
+
+select title, author, school, data, price from art 
+    inner join sold on art.id = sold.book_id
+    inner join type_of_art on art.type_id = type_of_art.id 
+    where sold.user_id = 1 and type_of_art.name = "mythological";
+
+
+
+
+
+-- Third join selection
+-- (type_of_art join art) join sold
+-- Join cardinalities: 499 + 499 + 1 + 1 = 1000
+-- Join estimation: |T'| = 18 * 499 * 10 / 18 / 10 / 18 / 10 ~ 2.77 = 3
+-- Time: 309ms
+
+select title, author, school, data, price from type_of_art 
+    inner join art on type_of_art.id = art.type_id
+    inner join sold on sold.book_id = art.id
+    where sold.user_id = 1 and type_of_art.name = "mythological";
+
+
+
+
+
+Experiment 1:
+Time: 0.55390 ms 
+
+Experiment 2:
+Time: 0.55760 ms 
+
+Experiment 3:
+Time: 0.66920 ms 
+
+Experiment 4:
+Time: 0.47120 ms 
+
+Experiment 5:
+Time: 0.54940 ms 
+
+2.80130 / 5 = 0.56026
+
+Average runtime: 0.56026 ms

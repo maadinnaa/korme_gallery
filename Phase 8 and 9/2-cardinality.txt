@@ -1,0 +1,68 @@
+select count(*) from sold 
+    inner join art on sold.book_id = art.id 
+    inner join type_of_art on art.type_id = type_of_art.id 
+    where type_of_art.name = "portrait";
+
+
+
+-- First join selection
+-- (sold join art) join type_of_art
+-- Join cardinalities: 499 + 499 + 1 = 999
+-- Join estimation: |T'| = 18 * 499 * 10 / 18 / 10 / 10 ~ 49.9 = 50
+-- Time: 360ms
+
+select count(*) from sold 
+    inner join art on sold.book_id = art.id 
+    inner join type_of_art on art.type_id = type_of_art.id 
+    where type_of_art.name = "portrait";
+
+
+
+
+
+-- Second join selection
+-- (art join sold) join type_of_art
+-- Join cardinalities: 499 + 499 + 1 = 999
+-- Join estimation: |T'| = 18 * 499 * 10 / 18 / 10 / 10 ~ 49.9 = 50
+-- Time: 250ms
+
+select count(*) from art 
+    inner join sold on art.id = sold.book_id
+    inner join type_of_art on art.type_id = type_of_art.id 
+    where type_of_art.name = "portrait";
+
+
+
+
+
+-- Third join selection
+-- (type_of_art join art) join sold
+-- Join cardinalities: 499 + 499 + 1 = 999
+-- Join estimation: |T'| = 18 * 499 * 10 / 18 / 10 / 10 ~ 49.9 = 50
+-- Time: 273ms
+
+select count(*) from type_of_art 
+    inner join art on art.type_id = type_of_art.id  
+    inner join sold on sold.book_id = art.id 
+    where type_of_art.name = "portrait";
+
+
+
+Experiment 1:
+Time: 0.81620 ms 
+
+Experiment 2:
+Time: 0.52630 ms 
+
+Experiment 3:
+Time: 0.64910 ms 
+
+Experiment 4:
+Time: 0.92710 ms 
+
+Experiment 5:
+Time: 0.63640 ms 
+
+3.55510 / 5 = 0.71102
+
+Average runtime: 0.71102 ms

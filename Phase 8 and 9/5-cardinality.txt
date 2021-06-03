@@ -1,0 +1,52 @@
+select distinct(author) from art 
+    inner join type_of_art on art.type_id = type_of_art.id 
+    where type_of_art.name = "mythological";
+
+
+
+
+
+-- First join selection
+-- art join type_of_art
+-- Join cardinalities: 499 + 1 = 500
+-- Join estimation: |T'| = 10 * 499 / 10 / 10 ~ 49.9 = 50
+-- Time: 748ms
+
+select distinct(author) from art 
+    inner join type_of_art on art.type_id = type_of_art.id 
+    where type_of_art.name = "mythological";
+
+
+
+
+
+-- Second join selection
+-- type_of_art join art
+-- Join cardinalities: 499 + 1 = 500
+-- Join estimation: |T'| = 10 * 499 / 10 / 10 ~ 49.9 = 50
+-- Time: 364ms
+
+select distinct(author) from type_of_art 
+    inner join art on type_of_art.id = art.type_id
+    where type_of_art.name = "mythological";
+
+
+
+Experiment 1:
+Time: 0.59530 ms 
+
+Experiment 2:
+Time: 0.66890 ms 
+
+Experiment 3:
+Time: 0.99460 ms 
+
+Experiment 4:
+Time: 0.58940 ms 
+
+Experiment 5:
+Time: 0.73700 ms 
+
+3.58070 / 5 = 0.71614
+
+Average runtime: 0.71614 ms

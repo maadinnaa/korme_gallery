@@ -1,0 +1,52 @@
+select title, author, school, data, price from sold 
+    inner join art on sold.book_id = art.id     
+    order by price limit 1;
+
+
+
+
+-- First join selection
+-- sold join art
+-- Join cardinalities: 499
+-- Join estimation: |T'| = 18 * 499 / 18 = 499
+-- Time: 296ms
+
+select title, author, school, data, price from sold 
+    inner join art on sold.book_id = art.id     
+    order by price limit 1;
+
+
+
+
+
+-- Second join selection
+-- art join sold
+-- Join cardinalities: 499
+-- Join estimation: |T'| = 18 * 499 / 18 = 499
+-- Time: 350ms
+
+select title, author, school, data, price from art 
+    inner join sold on art.id = sold.book_id
+    order by price limit 1;
+
+
+
+
+Experiment 1:
+Time: 0.68000 ms 
+
+Experiment 2:
+Time: 0.41580 ms 
+
+Experiment 3:
+Time: 0.41420 ms 
+
+Experiment 4:
+Time: 0.43570 ms 
+
+Experiment 5:
+Time: 0.49860 ms 
+
+2.44430 / 5 = 0.48886
+
+Average runtime: 0.48886 ms
